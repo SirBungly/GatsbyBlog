@@ -5,6 +5,25 @@
  */
 
 module.exports = {
-  /* Your site config here */
-  plugins: [],
+  siteMetadata: {
+    title: 'My Gatsby Test'
+  },
+  plugins: [
+    `gatsby-plugin-postcss`,
+    `gatsby-plugin-react-helmet`,
+    {
+      resolve: 'gatsby-source-graphcms',
+      options: {
+        endpoint: 'https://api-eu-central-1.graphcms.com/v2/ckj2134fh6lyc01z91vr8hwht/master',
+        buildMarkdownNodes: true,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `pages`,
+        path: `${__dirname}/src/pages/`,
+      },
+    },
+  ],
 }
