@@ -1,17 +1,13 @@
 import React from "react"
 import { graphql } from "gatsby"
 import { Link } from "gatsby"
-import Image from "@graphcms/react-image"
 import LayoutMargin from "../components/layoutMargin"
+import { GatsbyImage } from "gatsby-plugin-image"
+import { MDXRenderer } from "gatsby-plugin-mdx"
 
 export default function Home({ data }) {
   const { posts } = data
   return posts.nodes.map(post => {
-    const asset = {
-      handle: post.heroImage.handle,
-      width: 1920,
-      height: 1080,
-    }
     const slug = "posts/" + post.slug
     return (
       <LayoutMargin key={post.id}>
@@ -23,34 +19,35 @@ export default function Home({ data }) {
           </h1>
           <h2 className="text-gray-500">{post.subtitle}</h2>
           <Link to={slug} className="text-3xl">
-            <Image image={asset} maxWidth={1080} />
+            <GatsbyImage image={post.heroImage.gatsbyImageData} alt="" />
           </Link>
+          <MDXRenderer>{post.openingParagraphNode.childMdx.body}</MDXRenderer>
         </div>
       </LayoutMargin>
     )
   })
 }
 
-export const query = graphql`
+export const siteQuery = graphql`
   query {
-    site {
-      siteMetadata {
-        title
-      }
-    }
-    posts: allGraphCmsPost(sort: { fields: createdAt, order: ASC }) {
-      nodes {
+    posts: allDatoCmsPost( sort: { fields: meta___firstPublishedAt, order: ASC } )
+    {  
+    nodes {
         id
         title
         subtitle
         slug
-        publishedAt
-        createdAt
-        color {
-          hex
+        meta {
+          firstPublishedAt
+        }
+        openingParagraph
+        openingParagraphNode {
+          childMdx {
+            body
+          }
         }
         heroImage {
-          handle
+          gatsbyImageData
         }
       }
     }
