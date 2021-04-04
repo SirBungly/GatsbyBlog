@@ -11,7 +11,7 @@ exports.createPages = async ({ graphql, actions }) => {
           subtitle
           slug
           meta {
-            firstPublishedAt
+            firstPublishedAt(formatString: "DD MMMM, YYYY", locale: "en")
           }
           openingParagraph
           openingParagraphNode {

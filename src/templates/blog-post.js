@@ -14,7 +14,7 @@ export default function BlogPost({ data, pageContext }) {
         <GatsbyImage image={pageContext.heroImage} alt="" />
         <h1>{pageContext.title}</h1>
         <h2>{pageContext.subtitle}</h2>
-        <h5>{pageContext.createdAt}</h5>
+        <h5>{pageContext.firstPublishedAt}</h5>
         <MDXRenderer>{pageContext.mdx}</MDXRenderer>
       </div>
     </LayoutMargin>

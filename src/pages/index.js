@@ -38,7 +38,7 @@ export const siteQuery = graphql`
         subtitle
         slug
         meta {
-          firstPublishedAt
+          firstPublishedAt(formatString: "DD MMMM, YYYY", locale: "en")
         }
         openingParagraph
         openingParagraphNode {
