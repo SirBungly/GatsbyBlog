@@ -9,6 +9,7 @@ module.exports = {
     title: 'My Gatsby Test'
   },
   plugins: [
+    `gatsby-plugin-gatsby-cloud`,
     `gatsby-plugin-postcss`,
     `gatsby-plugin-react-helmet`,
     {
