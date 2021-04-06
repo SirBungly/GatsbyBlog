@@ -22,12 +22,39 @@ exports.createPages = async ({ graphql, actions }) => {
           heroImage {
             gatsbyImageData
           }
+          tags {
+            name
+            id
+          }
+          author {
+            name
+            avatar {
+              gatsbyImageData(width: 100, height: 100)
+            }
+            slug
+          }
+        }
+      }
+      authors: allDatoCmsAuthor {
+        nodes {
+          avatar {
+            gatsbyImageData(width: 150, height: 150)
+          }
+          bioNode {
+            childMdx {
+              body
+            }
+          }
+          id
+          slug
+          name
         }
       }
     }
   `)
 
   const { posts } = result.data
+  const { authors } = result.data
 
   posts.nodes.forEach(node => {
     createPage({
@@ -40,6 +67,23 @@ exports.createPages = async ({ graphql, actions }) => {
         heroImage: node.heroImage.gatsbyImageData,
         markdown: node.openingParagraph,
         firstPublishedAt: node.meta.firstPublishedAt,
+        tags: node.tags,
+        author: node.author,
+        id: node.id,
+      },
+    })
+  })
+
+  authors.nodes.forEach(author => {
+    createPage({
+      path: `/authors/${author.slug}`,
+      component: path.resolve(`./src/templates/author-page.js`),
+      context: {
+        name: author.name,
+        avatar: author.avatar.gatsbyImageData,
+        id: author.id,
+        slug: author.slug,
+        bio: author.bioNode.childMdx.body,
       },
     })
   })
